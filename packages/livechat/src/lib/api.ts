@@ -1,16 +1,18 @@
+import type { IOmnichannelAgent } from '@rocket.chat/core-typings';
 import i18next from 'i18next';
 
 import { getDateFnsLocale } from './locale';
 
-export const normalizeAgent = (agentData) => agentData && { name: agentData.name, username: agentData.username, status: agentData.status };
+export const normalizeAgent = (agentData: IOmnichannelAgent) =>
+	agentData && { name: agentData.name, username: agentData.username, status: agentData.status };
 
-export const normalizeQueueAlert = async (queueInfo) => {
+export const normalizeQueueAlert = async (queueInfo: any) => {
 	if (!queueInfo) {
 		return;
 	}
-	const formatDistance = await import('date-fns/formatDistance');
+	const { default: formatDistance } = await import('date-fns/formatDistance');
 	const { spot, estimatedWaitTimeSeconds } = queueInfo;
-	const locale = getDateFnsLocale();
+	const locale = await getDateFnsLocale();
 	const estimatedWaitTime =
 		estimatedWaitTimeSeconds && formatDistance(new Date().setSeconds(estimatedWaitTimeSeconds), new Date(), { locale });
 	return (
