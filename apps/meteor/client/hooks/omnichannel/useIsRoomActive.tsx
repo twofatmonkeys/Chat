@@ -6,7 +6,7 @@ export const useIsRoomActive = (room: IOmnichannelRoom) => {
 	const { activity = [] } = room.v; // TODO: add activity to IOmnichannelRoom['v']
 	const isContactActive = useMemo(() => {
 		const date = new Date();
-		const currentPeriod = `${date.getFullYear()}-${date.getMonth() + 1}`;
+		const currentPeriod = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
 		return activity.includes(currentPeriod);
 	}, [activity]);
 
